@@ -15,7 +15,7 @@ public:
     float diem;
 
     SinhVien() {
-        msv = ++msvCounter; // Tang so thu tu moi khi tao doi tuong moi
+        msv = ++msvCounter; // Tang ma sinh vien moi khi tao doi tuong moi
     }
 	//Tao 1 constructor co tham so de khoi tao ten,tuoi,diem va tu dong tang ma sinh vien
     SinhVien(string ten, int tuoi, float diem) : ten(ten), tuoi(tuoi), diem(diem) 
@@ -46,7 +46,8 @@ public:
         string ten;
         int tuoi;
         float diem;
-
+		
+		
         cout << "Nhap ten sinh vien: ";
         getline(cin, ten);
 
@@ -233,28 +234,30 @@ public:
     }
 };
 
+int show(int luaChon){
+	cout << "----------MENU----------" << endl;
+    cout << "1. In danh sach sinh vien" << endl;
+    cout << "2. Them sinh vien" << endl;
+    cout << "3. Sua sinh vien" << endl;
+    cout << "4. Xoa sinh vien" << endl;
+    cout << "5. Tim kiem" << endl;
+    cout << "6. Sap xep" << endl;
+    cout << "7. Thong ke" << endl;
+    cout << "8. Luu thong tin xuong file" << endl;
+    cout << "0. Thoat" << endl;
+    cout << "Nhap lua chon cua ban: ";
+    cin >> luaChon;
+    cin.ignore();
+    return luaChon;
+}
+
+
 int main() {
     QuanLySinhVien quanLy;
-    int luaChon;
-
-    do {
-        // Hien thi menu
-        cout << "MENU:" << endl;
-        cout << "1. In danh sach sinh vien" << endl;
-        cout << "2. Them sinh vien" << endl;
-        cout << "3. Sua sinh vien" << endl;
-        cout << "4. Xoa sinh vien" << endl;
-        cout << "5. Tim kiem" << endl;
-        cout << "6. Sap xep" << endl;
-        cout << "7. Thong ke" << endl;
-        cout << "8. Luu thong tin xuong file" << endl;
-        cout << "0. Thoat" << endl;
-
-        // Nhap lua chon tu nguoi dung
-        cout << "Nhap lua chon cua ban: ";
-        cin >> luaChon;
-        cin.ignore(); // Ðoc ky tu Enter trong bo nho dem
-
+    
+    while (true){
+		int luaChon = show(luaChon);
+		system ("cls");
         // Thuc hien chuc nang tuong ung voi lua chon
         switch (luaChon) {
             case 1:
@@ -316,12 +319,22 @@ int main() {
                 break;
             case 0:
                 cout << "Ket thuc chuong trinh." << endl;
-                break;
+                return 0;
             default:
                 cout << "Lua chon khong hop le!" << endl;
         }
-    } while (luaChon != 0);
+        
+        cout << "Ban co muon tiep tuc! (1/0) "; 
+        
+        bool tiep;
+        cin >> tiep;
+        
+        if (!tiep){
+        	cout << "Ket thuc chuong trinh.";
+        	return 0;
+		}
+        
+    } 
 
     return 0;
 }
-
