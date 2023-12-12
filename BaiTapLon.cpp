@@ -60,30 +60,30 @@ public:
         cout << "Da them sinh vien: " << ten << endl;
     }
 	// Hien thi danh sach sinh vien
-<<<<<<< HEAD
+
     void HienThiDanhSach() const 
 	{
     	if(danhSachSinhVien.empty()){
     		cout << "Chua co thong tin sinh vien." << endl; }
         else {
-=======
+
     void HienThiDanhSach() const {
     	if(danhSachSinhVien.empty()){
     		cout << "Chua co thong tin sinh vien." << endl;}
     	else {
->>>>>>> 7fee0a7b158b8e63a5a6b1b485f09e96545e896c
+
      	cout << "| MSV   | Ten                    | Tuoi | Diem |" << endl;
         cout << setfill('-') << setw(46) << "" << setfill(' ') << endl;
         for (const auto& sv : danhSachSinhVien) {
             sv.HienThiThongTin();
         }
-<<<<<<< HEAD
+
     	}
 		}
-=======
+
     }
 }
->>>>>>> 7fee0a7b158b8e63a5a6b1b485f09e96545e896c
+
 
     void SapXepTheoTen() {
     	// Sap xep danh sach sinh vien theo ten theo thu tu tang dan
