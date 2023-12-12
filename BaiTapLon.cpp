@@ -61,13 +61,7 @@ public:
     }
 	// Hien thi danh sach sinh vien
 
-    void HienThiDanhSach() const 
-	{
-    	if(danhSachSinhVien.empty()){
-    		cout << "Chua co thong tin sinh vien." << endl; }
-        else {
-
-    void HienThiDanhSach() const {
+    void HienThiDanhSach()  {
     	if(danhSachSinhVien.empty()){
     		cout << "Chua co thong tin sinh vien." << endl;}
     	else {
@@ -79,10 +73,7 @@ public:
         }
 
     	}
-		}
-
     }
-}
 
 
     void SapXepTheoTen() {
