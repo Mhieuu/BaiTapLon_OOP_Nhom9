@@ -8,7 +8,7 @@ using namespace std;
 // Lop SinhVien dai dien cho mot sinh vien voi cac thuoc tinh co ban
 class SinhVien {
 public:
-    int msv;
+   long long int msv;
     string ten;
     int tuoi;
     float diem;
@@ -37,7 +37,7 @@ public:
     }
 	 // Nhap thong tin moi cho sinh vien va them vao danh sach
     void NhapThongTinSinhVien() {
-    	int msv;
+    	long long int msv;
         string ten;
         int tuoi;
         float diem;
