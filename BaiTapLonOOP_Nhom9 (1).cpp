@@ -8,20 +8,15 @@ using namespace std;
 // Lop SinhVien dai dien cho mot sinh vien voi cac thuoc tinh co ban
 class SinhVien {
 public:
-    static int msvCounter;// Bien static de theo doi ma sinh vien 
     int msv;
     string ten;
     int tuoi;
     float diem;
 
-    SinhVien() {
-        msv = ++msvCounter; // Tang ma sinh vien moi khi tao doi tuong moi
-    }
+    SinhVien (){}
 	//Tao 1 constructor co tham so de khoi tao ten,tuoi,diem va tu dong tang ma sinh vien
-    SinhVien(string ten, int tuoi, float diem) : ten(ten), tuoi(tuoi), diem(diem) 
-	{
-	msv = ++msvCounter;
-    }
+    SinhVien(int msv,string ten, int tuoi, float diem) : msv(msv),ten(ten), tuoi(tuoi), diem(diem) {}
+
 	
     void HienThiThongTin() const {
         cout << "| " << setw(3) << msv << " | " << setw(22) << left << ten << " | " << setw(4) << tuoi
@@ -29,7 +24,6 @@ public:
     }
 };
 
-int SinhVien::msvCounter = 9998;// Khoi tao bien static
 
 // Lop QuanLySinhVien ke thua tu lop SinhVien và them chuc nang quan ly danh sach sinh vien
 class QuanLySinhVien:public SinhVien {
@@ -43,11 +37,18 @@ public:
     }
 	 // Nhap thong tin moi cho sinh vien va them vao danh sach
     void NhapThongTinSinhVien() {
+    	int msv;
         string ten;
         int tuoi;
         float diem;
-		
-		
+        do{
+		cout<<"Nhap ma sinh vien: ";
+		cin>>msv;
+		if (msv<10000 || msv >99999){
+			cout<<"Ma sinh vien khong hop le! Vui long nhap lai!"<<endl;// MSV quy dinh la so tu nhien co 5 chu so, neu nhap sai se nhap lai
+		}}
+		while(msv<10000 || msv >99999);
+		cin.ignore();
         cout << "Nhap ten sinh vien: ";
         getline(cin, ten);
 
@@ -57,8 +58,9 @@ public:
         cout << "Nhap diem sinh vien: ";
         cin >> diem;
 
-        ThemSinhVien(SinhVien(ten, tuoi, diem));
+        ThemSinhVien(SinhVien(msv,ten, tuoi, diem));
         cout << "Da them sinh vien: " << ten << endl;
+        
     }
 	// Hien thi danh sach sinh vien
 
@@ -77,12 +79,12 @@ public:
     }
 
 
-    void SapXepTheoTen() {
-    	// Sap xep danh sach sinh vien theo ten theo thu tu tang dan
+    void SapXepTheoMSV() {
+    	// Sap xep danh sach sinh vien theo msv theo thu tu tang dan
         sort(danhSachSinhVien.begin(), danhSachSinhVien.end(), [](const SinhVien& a, const SinhVien& b) {
-        	// Lambda function de so sanh ten cua hai sinh vien
-        	//Lambda function tra ve true neu ten cua a nho hon ten cua b de dam bao sap xep theo thu tu tang dan.
-            return a.ten < b.ten;
+        	// Lambda function de so sanh msv cua hai sinh vien
+        	//Lambda function tra ve true neu msv cua a nho hon msv cua b de dam bao sap xep theo thu tu tang dan.
+            return a.msv < b.msv;
         });
     }
 
@@ -290,14 +292,14 @@ int main() {
             case 6:
                 // Hien thi menu sap xep va thuc hien sap xep
                 int luaChonSapXep;
-                cout << "1. Sap xep theo ten" << endl;
+                cout << "1. Sap xep theo MSV" << endl;
                 cout << "2. Sap xep theo diem" << endl;
                 cout << "3. Sap xep theo tuoi" << endl;
                 cout << "Nhap lua chon cua ban: ";
                 cin >> luaChonSapXep;
                 switch (luaChonSapXep) {
                     case 1:
-                        quanLy.SapXepTheoTen();
+                        quanLy.SapXepTheoMSV();
                         break;
                     case 2:
                         quanLy.SapXepTheoDiem();
