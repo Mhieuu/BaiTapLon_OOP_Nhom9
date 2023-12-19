@@ -5,7 +5,7 @@
 #include <iomanip>
 
 using namespace std;
-
+// Lop SinhVien dai dien cho mot sinh vien voi cac thuoc tinh co ban
 class SinhVien {
 private:
     long long int msv;
@@ -14,16 +14,17 @@ private:
     float diem;
 
 public:
+		//Tao 1 constructor co tham so de khoi tao ten,tuoi,diem va tu dong tang ma sinh vien
     SinhVien() {}
     SinhVien(long long int msv, string ten, int tuoi, float diem)
         : msv(msv), ten(ten), tuoi(tuoi), diem(diem) {}
 
     void HienThiThongTin() const {
         cout << "| " << setw(3) << msv << " | " << setw(22) << left << ten << " | " << setw(4) << tuoi
-             << " | " << setw(4) << diem << " |" << endl;
+             << " | " << setw(4) << diem << " |" << endl;// Hien thi thong tin cua sinh vien theo dinh dang bang
     }
 
-    // Các phuong th?c public d? truy c?p các thu?c tính private
+    // Các phuong thuc public de truy cap các thuoc tính private
     long long int GetMSV() const {
         return msv;
     }
@@ -48,15 +49,18 @@ public:
     }
 };
 
-class QuanLySinhVien {
+// Lop QuanLySinhVien ke thua tu lop SinhVien và them chuc nang quan ly danh sach sinh vien
+class QuanLySinhVien :public SinhVien{
 private:
-    vector<SinhVien> danhSachSinhVien;
+    vector<SinhVien> danhSachSinhVien;// Danh sach sinh vien
 
 public:
+		// Them sinh vien vao danh sach
     void ThemSinhVien(const SinhVien& sv) {
         danhSachSinhVien.push_back(sv);
     }
-
+	
+	// Nhap thong tin moi cho sinh vien va them vao danh sach
     void NhapThongTinSinhVien() {
         long long int msv;
         string ten;
@@ -67,7 +71,7 @@ public:
             cout << "Nhap ma sinh vien: ";
             cin >> msv;
             if (msv < 10000 || msv > 99999) {
-                cout << "Ma sinh vien khong hop le! Vui long nhap lai!" << endl;
+                cout << "Ma sinh vien khong hop le! Vui long nhap lai!" << endl;// MSV quy dinh la so tu nhien co 5 chu so, neu nhap sai se nhap lai
             }
         } while (msv < 10000 || msv > 99999);
 
@@ -84,7 +88,8 @@ public:
         ThemSinhVien(SinhVien(msv, ten, tuoi, diem));
         cout << "Da them sinh vien: " << ten << endl;
     }
-
+	
+		// Hien thi danh sach sinh vien
     void HienThiDanhSach() {
         if (danhSachSinhVien.empty()) {
             cout << "Chua co thong tin sinh vien." << endl;
@@ -96,41 +101,52 @@ public:
             }
         }
     }
-
+	
+	// Sap xep danh sach sinh vien theo msv theo thu tu tang dan
     void SapXepTheoMSV() {
         sort(danhSachSinhVien.begin(), danhSachSinhVien.end(), [](const SinhVien& a, const SinhVien& b) {
+        		// Lambda function de so sanh msv cua hai sinh vien
+        	//Lambda function tra ve true neu msv cua a nho hon msv cua b de dam bao sap xep theo thu tu tang dan.
             return a.GetMSV() < b.GetMSV();
         });
     }
-
+	
+	// Sap xep danh sach sinh vien theo diem giam dan
     void SapXepTheoDiem() {
         sort(danhSachSinhVien.begin(), danhSachSinhVien.end(), [](const SinhVien& a, const SinhVien& b) {
             return a.GetDiem() > b.GetDiem();
         });
     }
-
+	
+	// Sap xep danh sach sinh vien theo tuoi tang dan
     void SapXepTheoTuoi() {
         sort(danhSachSinhVien.begin(), danhSachSinhVien.end(), [](const SinhVien& a, const SinhVien& b) {
             return a.GetTuoi() < b.GetTuoi();
         });
     }
-
+	
+	// Xoa sinh vien theo ma sinh vien (MSV) 
     void XoaSinhVien(int msv) {
+    		// Su dung ham remove_if de di chuyen cac sinh vien có MSV trung khop den cuoi danh sach
         auto it = remove_if(danhSachSinhVien.begin(), danhSachSinhVien.end(),
                             [msv](const SinhVien& sv) { return sv.GetMSV() == msv; });
-
+			// Kiem tra xem co sinh vien can xoa khong
         if (it != danhSachSinhVien.end()) {
+        	// Thuc hien viec xoa sinh vien co MSV trung khop
             danhSachSinhVien.erase(it, danhSachSinhVien.end());
             cout << "Da xoa sinh vien co MSV: " << msv << endl;
         } else {
             cout << "Khong tim thay sinh vien co MSV: " << msv << endl;
         }
     }
-
+	
+	
+		// Sua thong tin cua sinh vien có STT trung khop
     void SuaSinhVien(int msv) {
+    		// Su dung ham find_if de tim sinh viên co STT trung khop
         auto it = find_if(danhSachSinhVien.begin(), danhSachSinhVien.end(),
                           [msv](const SinhVien& sv) { return sv.GetMSV() == msv; });
-
+		// Kiem tra xem co sinh viên can sua không
         if (it != danhSachSinhVien.end()) {
             cout << "Nhap thong tin moi cho sinh vien :" << endl;
 
@@ -143,7 +159,7 @@ public:
             cout << "Nhap diem sinh vien: ";
             cin >> diemMoi;
 
-         
+         // Cap nhat thong tin
         it->SetTuoi(tuoiMoi);
         it->SetDiem(diemMoi);
 
@@ -152,11 +168,13 @@ public:
             cout << "Khong tim thay sinh vien co MSV: " << msv << endl;
         }
     }
-
+	
+	// Tim sinh vien co MSV trung khop voi tham so MSV
     void TimKiemTheoMSV(int msv) const {
         auto it = find_if(danhSachSinhVien.begin(), danhSachSinhVien.end(),
                           [msv](const SinhVien& sv) { return sv.GetMSV() == msv; });
-
+		
+		 // Kiem tra xem co sinh vien nao co MSV trung khop hay khong
         if (it != danhSachSinhVien.end()) {
             cout << "| MSV   | Ten                    | Tuoi | Diem |" << endl;
             cout << setfill('-') << setw(40) << "" << setfill(' ') << endl;
@@ -174,14 +192,15 @@ public:
         int soSinhVienKha = 0;
         int soSinhVienTB = 0;
 
+		 // Tinh tong diem cua tat ca sinh vien
         for (const auto& sv : danhSachSinhVien) {
             diemTrungBinh += sv.GetDiem();
-
+			// Kiem tra va cap nhat sinh vien co diem cao nhat
             if (sv.GetDiem() > diemCaoNhat) {
                 diemCaoNhat = sv.GetDiem();
                 sinhVienDiemCaoNhat = sv.GetMSV();
             }
-
+			// dem so luong sinh vien theo tung khoang diem
             if (sv.GetDiem() >= 8) {
                 soSinhVienGioi++;
             } else if (sv.GetDiem() >= 5) {
@@ -190,11 +209,14 @@ public:
                 soSinhVienTB++;
             }
         }
-
+		
+			// Tinh diem trung binh cua tat ca sinh vien
         diemTrungBinh /= danhSachSinhVien.size();
-
+		
+		 // In thong tin thong ke
         cout << "Diem trung binh cua cac sinh vien: " << diemTrungBinh << endl;
-
+		
+		// Kiem tra và in thong tin sinh vien co diem cao nhat
         if (sinhVienDiemCaoNhat != -1) {
             auto it = find_if(danhSachSinhVien.begin(), danhSachSinhVien.end(),
                               [sinhVienDiemCaoNhat](const SinhVien& sv) {
@@ -205,7 +227,8 @@ public:
                 cout << "Sinh vien co diem cao nhat: " << it->GetTen() << " (Diem: " << it->GetDiem() << ")" << endl;
             }
         }
-
+        
+		 // Tinh ti le sinh vien theo tung khoang diem va in thong tin
         float tiLeGioi = static_cast<float>(soSinhVienGioi) / danhSachSinhVien.size() * 100;
         float tiLeKha = static_cast<float>(soSinhVienKha) / danhSachSinhVien.size() * 100;
         float tiLeTB = static_cast<float>(soSinhVienTB) / danhSachSinhVien.size() * 100;
@@ -216,16 +239,20 @@ public:
     }
 
     void LuuThongTinXuongFile(const string& tenFile) {
+    	// Mo mot tep tin de ghi thông tin
         ofstream outFile(tenFile);
+         // Kiem tra xem viec mo tep co thanh cong hay khong
         if (!outFile.is_open()) {
             cout << "Khong the mo tao file " << tenFile << endl;
-            return;
+            return; // Tra ve neu không the mo tep
         }
-
+		
+			// Ghi thông tin ve sinh viên xuong tep
         for (const auto& sv : danhSachSinhVien) {
             outFile << sv.GetMSV() << " " << sv.GetTen() << " " << sv.GetTuoi() << " " << sv.GetDiem() << endl;
         }
-
+		
+		  // Ðóng tep tin sau khi ghi xong
         outFile.close();
     }
 };
@@ -253,7 +280,8 @@ int main() {
     while (true) {
         int luaChon = show(luaChon);
         system("cls");
-
+		
+		// Thuc hien chuc nang tuong ung voi lua chon
         switch (luaChon) {
             case 1:
                 quanLy.HienThiDanhSach();
