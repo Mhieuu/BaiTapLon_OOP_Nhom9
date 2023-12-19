@@ -49,8 +49,8 @@ public:
     }
 };
 
-// Lop QuanLySinhVien ke thua tu lop SinhVien và them chuc nang quan ly danh sach sinh vien
-class QuanLySinhVien :public SinhVien{
+// Lop QuanLySinhVien voi chuc nang quan ly danh sach sinh vien
+class QuanLySinhVien {
 private:
     vector<SinhVien> danhSachSinhVien;// Danh sach sinh vien
 
